@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package api.user;
+
+option go_package = "awsomestore/api/user;user";
+
+service User {
+  rpc CreateUser (CreateUserReq) returns (CreateUserResp);
+  rpc UpdateUser (UpdateUserReq) returns (UpdateUserResp);
+  rpc QueryUser (QueryUserReq) returns (QueryUserResp);
+  rpc ListUserProfile (ListUserProfileReq) returns (ListUserProfileResp);
+}
+
+message CreateUserReq {
+  string name = 1;
+  string email = 2;
+  string password = 3;
+  string avatar = 4 ;
+}
+message CreateUserResp {}
+message UpdateUserReq {}
+message UpdateUserResp {}
+message QueryUserReq {
+  string email = 1;
+}
+message QueryUserResp {
+  string name = 1;
+  string email = 2;
+  string password = 3;
+  string avatar = 4 ;
+}
+message ListUserProfileReq {}
+message ListUserProfileResp {}

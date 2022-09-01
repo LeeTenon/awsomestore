@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package api.gate;
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+import "validate/validate.proto";
+
+option go_package = "awsomestore/api/gate;gate";
+
+service Gate {
+	rpc Login (LoginReq) returns (LoginResp) {
+		option (google.api.http) = {
+			post: "/login",
+			body: "*",
+		};
+	};
+}
+
+message LoginReq {
+	string email = 1 [(validate.rules).string ={min_len: 1}];;
+	string password = 2 [(validate.rules).string ={min_len: 1}];;
+}
+
+message LoginResp {
+	string token = 1;
+	string username = 2;
+}

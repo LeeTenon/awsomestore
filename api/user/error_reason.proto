@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package user;
+
+option go_package = "awsomestore/api/user;user";
+
+enum ErrorReason {
+  USER_NOT_FOUND = 0;
+}
