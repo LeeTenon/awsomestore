@@ -18,194 +18,316 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// UserClient is the client API for User service.
+// AccountClient is the client API for Account service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type UserClient interface {
+type AccountClient interface {
 	CreateUser(ctx context.Context, in *CreateUserReq, opts ...grpc.CallOption) (*CreateUserResp, error)
 	UpdateUser(ctx context.Context, in *UpdateUserReq, opts ...grpc.CallOption) (*UpdateUserResp, error)
 	QueryUser(ctx context.Context, in *QueryUserReq, opts ...grpc.CallOption) (*QueryUserResp, error)
 	ListUserProfile(ctx context.Context, in *ListUserProfileReq, opts ...grpc.CallOption) (*ListUserProfileResp, error)
 }
 
-type userClient struct {
+type accountClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewUserClient(cc grpc.ClientConnInterface) UserClient {
-	return &userClient{cc}
+func NewAccountClient(cc grpc.ClientConnInterface) AccountClient {
+	return &accountClient{cc}
 }
 
-func (c *userClient) CreateUser(ctx context.Context, in *CreateUserReq, opts ...grpc.CallOption) (*CreateUserResp, error) {
+func (c *accountClient) CreateUser(ctx context.Context, in *CreateUserReq, opts ...grpc.CallOption) (*CreateUserResp, error) {
 	out := new(CreateUserResp)
-	err := c.cc.Invoke(ctx, "/api.user.User/CreateUser", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/api.user.Account/CreateUser", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *userClient) UpdateUser(ctx context.Context, in *UpdateUserReq, opts ...grpc.CallOption) (*UpdateUserResp, error) {
+func (c *accountClient) UpdateUser(ctx context.Context, in *UpdateUserReq, opts ...grpc.CallOption) (*UpdateUserResp, error) {
 	out := new(UpdateUserResp)
-	err := c.cc.Invoke(ctx, "/api.user.User/UpdateUser", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/api.user.Account/UpdateUser", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *userClient) QueryUser(ctx context.Context, in *QueryUserReq, opts ...grpc.CallOption) (*QueryUserResp, error) {
+func (c *accountClient) QueryUser(ctx context.Context, in *QueryUserReq, opts ...grpc.CallOption) (*QueryUserResp, error) {
 	out := new(QueryUserResp)
-	err := c.cc.Invoke(ctx, "/api.user.User/QueryUser", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/api.user.Account/QueryUser", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *userClient) ListUserProfile(ctx context.Context, in *ListUserProfileReq, opts ...grpc.CallOption) (*ListUserProfileResp, error) {
+func (c *accountClient) ListUserProfile(ctx context.Context, in *ListUserProfileReq, opts ...grpc.CallOption) (*ListUserProfileResp, error) {
 	out := new(ListUserProfileResp)
-	err := c.cc.Invoke(ctx, "/api.user.User/ListUserProfile", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/api.user.Account/ListUserProfile", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// UserServer is the server API for User service.
-// All implementations must embed UnimplementedUserServer
+// AccountServer is the server API for Account service.
+// All implementations must embed UnimplementedAccountServer
 // for forward compatibility
-type UserServer interface {
+type AccountServer interface {
 	CreateUser(context.Context, *CreateUserReq) (*CreateUserResp, error)
 	UpdateUser(context.Context, *UpdateUserReq) (*UpdateUserResp, error)
 	QueryUser(context.Context, *QueryUserReq) (*QueryUserResp, error)
 	ListUserProfile(context.Context, *ListUserProfileReq) (*ListUserProfileResp, error)
-	mustEmbedUnimplementedUserServer()
+	mustEmbedUnimplementedAccountServer()
 }
 
-// UnimplementedUserServer must be embedded to have forward compatible implementations.
-type UnimplementedUserServer struct {
+// UnimplementedAccountServer must be embedded to have forward compatible implementations.
+type UnimplementedAccountServer struct {
 }
 
-func (UnimplementedUserServer) CreateUser(context.Context, *CreateUserReq) (*CreateUserResp, error) {
+func (UnimplementedAccountServer) CreateUser(context.Context, *CreateUserReq) (*CreateUserResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateUser not implemented")
 }
-func (UnimplementedUserServer) UpdateUser(context.Context, *UpdateUserReq) (*UpdateUserResp, error) {
+func (UnimplementedAccountServer) UpdateUser(context.Context, *UpdateUserReq) (*UpdateUserResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateUser not implemented")
 }
-func (UnimplementedUserServer) QueryUser(context.Context, *QueryUserReq) (*QueryUserResp, error) {
+func (UnimplementedAccountServer) QueryUser(context.Context, *QueryUserReq) (*QueryUserResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method QueryUser not implemented")
 }
-func (UnimplementedUserServer) ListUserProfile(context.Context, *ListUserProfileReq) (*ListUserProfileResp, error) {
+func (UnimplementedAccountServer) ListUserProfile(context.Context, *ListUserProfileReq) (*ListUserProfileResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListUserProfile not implemented")
 }
-func (UnimplementedUserServer) mustEmbedUnimplementedUserServer() {}
+func (UnimplementedAccountServer) mustEmbedUnimplementedAccountServer() {}
 
-// UnsafeUserServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to UserServer will
+// UnsafeAccountServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to AccountServer will
 // result in compilation errors.
-type UnsafeUserServer interface {
-	mustEmbedUnimplementedUserServer()
+type UnsafeAccountServer interface {
+	mustEmbedUnimplementedAccountServer()
 }
 
-func RegisterUserServer(s grpc.ServiceRegistrar, srv UserServer) {
-	s.RegisterService(&User_ServiceDesc, srv)
+func RegisterAccountServer(s grpc.ServiceRegistrar, srv AccountServer) {
+	s.RegisterService(&Account_ServiceDesc, srv)
 }
 
-func _User_CreateUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Account_CreateUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateUserReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserServer).CreateUser(ctx, in)
+		return srv.(AccountServer).CreateUser(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/api.user.User/CreateUser",
+		FullMethod: "/api.user.Account/CreateUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServer).CreateUser(ctx, req.(*CreateUserReq))
+		return srv.(AccountServer).CreateUser(ctx, req.(*CreateUserReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _User_UpdateUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Account_UpdateUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateUserReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserServer).UpdateUser(ctx, in)
+		return srv.(AccountServer).UpdateUser(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/api.user.User/UpdateUser",
+		FullMethod: "/api.user.Account/UpdateUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServer).UpdateUser(ctx, req.(*UpdateUserReq))
+		return srv.(AccountServer).UpdateUser(ctx, req.(*UpdateUserReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _User_QueryUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Account_QueryUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(QueryUserReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserServer).QueryUser(ctx, in)
+		return srv.(AccountServer).QueryUser(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/api.user.User/QueryUser",
+		FullMethod: "/api.user.Account/QueryUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServer).QueryUser(ctx, req.(*QueryUserReq))
+		return srv.(AccountServer).QueryUser(ctx, req.(*QueryUserReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _User_ListUserProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Account_ListUserProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListUserProfileReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserServer).ListUserProfile(ctx, in)
+		return srv.(AccountServer).ListUserProfile(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/api.user.User/ListUserProfile",
+		FullMethod: "/api.user.Account/ListUserProfile",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServer).ListUserProfile(ctx, req.(*ListUserProfileReq))
+		return srv.(AccountServer).ListUserProfile(ctx, req.(*ListUserProfileReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// User_ServiceDesc is the grpc.ServiceDesc for User service.
+// Account_ServiceDesc is the grpc.ServiceDesc for Account service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var User_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "api.user.User",
-	HandlerType: (*UserServer)(nil),
+var Account_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "api.user.Account",
+	HandlerType: (*AccountServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "CreateUser",
-			Handler:    _User_CreateUser_Handler,
+			Handler:    _Account_CreateUser_Handler,
 		},
 		{
 			MethodName: "UpdateUser",
-			Handler:    _User_UpdateUser_Handler,
+			Handler:    _Account_UpdateUser_Handler,
 		},
 		{
 			MethodName: "QueryUser",
-			Handler:    _User_QueryUser_Handler,
+			Handler:    _Account_QueryUser_Handler,
 		},
 		{
 			MethodName: "ListUserProfile",
-			Handler:    _User_ListUserProfile_Handler,
+			Handler:    _Account_ListUserProfile_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "api/user/user.proto",
+}
+
+// CartClient is the client API for Cart service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type CartClient interface {
+	UpdateCart(ctx context.Context, in *UpdateCartReq, opts ...grpc.CallOption) (*UpdateCartResp, error)
+	QueryCart(ctx context.Context, in *QueryCartReq, opts ...grpc.CallOption) (*QueryCartResp, error)
+}
+
+type cartClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewCartClient(cc grpc.ClientConnInterface) CartClient {
+	return &cartClient{cc}
+}
+
+func (c *cartClient) UpdateCart(ctx context.Context, in *UpdateCartReq, opts ...grpc.CallOption) (*UpdateCartResp, error) {
+	out := new(UpdateCartResp)
+	err := c.cc.Invoke(ctx, "/api.user.Cart/UpdateCart", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *cartClient) QueryCart(ctx context.Context, in *QueryCartReq, opts ...grpc.CallOption) (*QueryCartResp, error) {
+	out := new(QueryCartResp)
+	err := c.cc.Invoke(ctx, "/api.user.Cart/QueryCart", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// CartServer is the server API for Cart service.
+// All implementations must embed UnimplementedCartServer
+// for forward compatibility
+type CartServer interface {
+	UpdateCart(context.Context, *UpdateCartReq) (*UpdateCartResp, error)
+	QueryCart(context.Context, *QueryCartReq) (*QueryCartResp, error)
+	mustEmbedUnimplementedCartServer()
+}
+
+// UnimplementedCartServer must be embedded to have forward compatible implementations.
+type UnimplementedCartServer struct {
+}
+
+func (UnimplementedCartServer) UpdateCart(context.Context, *UpdateCartReq) (*UpdateCartResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateCart not implemented")
+}
+func (UnimplementedCartServer) QueryCart(context.Context, *QueryCartReq) (*QueryCartResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method QueryCart not implemented")
+}
+func (UnimplementedCartServer) mustEmbedUnimplementedCartServer() {}
+
+// UnsafeCartServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to CartServer will
+// result in compilation errors.
+type UnsafeCartServer interface {
+	mustEmbedUnimplementedCartServer()
+}
+
+func RegisterCartServer(s grpc.ServiceRegistrar, srv CartServer) {
+	s.RegisterService(&Cart_ServiceDesc, srv)
+}
+
+func _Cart_UpdateCart_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateCartReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CartServer).UpdateCart(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/api.user.Cart/UpdateCart",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CartServer).UpdateCart(ctx, req.(*UpdateCartReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Cart_QueryCart_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryCartReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CartServer).QueryCart(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/api.user.Cart/QueryCart",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CartServer).QueryCart(ctx, req.(*QueryCartReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// Cart_ServiceDesc is the grpc.ServiceDesc for Cart service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var Cart_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "api.user.Cart",
+	HandlerType: (*CartServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "UpdateCart",
+			Handler:    _Cart_UpdateCart_Handler,
+		},
+		{
+			MethodName: "QueryCart",
+			Handler:    _Cart_QueryCart_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

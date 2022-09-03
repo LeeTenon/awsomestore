@@ -4,7 +4,7 @@ package api.user;
 
 option go_package = "awsomestore/api/user;user";
 
-service User {
+service Account {
   rpc CreateUser (CreateUserReq) returns (CreateUserResp);
   rpc UpdateUser (UpdateUserReq) returns (UpdateUserResp);
   rpc QueryUser (QueryUserReq) returns (QueryUserResp);
@@ -31,3 +31,31 @@ message QueryUserResp {
 }
 message ListUserProfileReq {}
 message ListUserProfileResp {}
+
+//---------------------------------------
+
+service Cart {
+  rpc UpdateCart (UpdateCartReq) returns (UpdateCartResp);
+  rpc QueryCart (QueryCartReq) returns (QueryCartResp);
+}
+
+message UpdateCartReq {
+  string uid = 1;
+  repeated cartItem cartItems = 2;
+}
+message UpdateCartResp {}
+
+message QueryCartReq {
+  string uid = 1;
+}
+message QueryCartResp {
+  repeated cartItem cartItems = 1;
+}
+
+message cartItem {
+  string pid = 1;
+  int32 count = 2;
+  string title = 3;
+  double Price = 4;
+  string coverUrl = 5;
+}
