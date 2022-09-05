@@ -25,15 +25,14 @@ func (s *ProductService) CreateProduct(ctx context.Context, in *product.CreatePr
     if err != nil {
         return nil, err
     }
-    keywords := strings.Join(in.Keyword, ",")
-    pictures := strings.Join(in.Picture, ",")
+    pictures := strings.Join(in.Pictures, ",")
 
     err = s.uc.CreateProduct(ctx, &model.Product{
         Pid:        strconv.FormatInt(pid, 10),
         Title:      in.Title,
         Desc:       in.Desc,
-        Keyword:    keywords,
         Price:      in.Price,
+        CoverUrl:   in.Cover,
         PictureUrl: pictures,
     })
     if err != nil {
@@ -49,14 +48,15 @@ func (s *ProductService) ListProduct(ctx context.Context, in *product.ListProduc
         return nil, err
     }
 
-    pbResult := make([]*product.ProductInfo, 0, 10)
+    pbResult := make([]*product.ProductOutline, 0, 10)
     for _, item := range result {
-        pbResult = append(pbResult, &product.ProductInfo{
-            Pid:     item.Pid,
-            Title:   item.Title,
-            Desc:    item.Desc,
-            Price:   item.Price,
-            Picture: strings.Split(item.PictureUrl, ","),
+        pbResult = append(pbResult, &product.ProductOutline{
+            Pid:      item.Pid,
+            Title:    item.Title,
+            Desc:     item.Desc,
+            Price:    item.Price,
+            Cover:    item.CoverUrl,
+            Category: "电子产品",
         })
     }
 

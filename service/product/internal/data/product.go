@@ -26,7 +26,7 @@ func NewProductRepo(data *Data, logger log.Logger) biz.ProductRepo {
 }
 
 func (r *ProductRepo) Save(ctx context.Context, p *model.Product) error {
-    if err := r.data.DB.FirstOrCreate(p).Error; err != nil {
+    if err := r.data.DB.Where("pid", p.Pid).FirstOrCreate(p).Error; err != nil {
         r.log.Errorf("create product[%s] error: %s", p.Pid, err.Error())
         return err
     }
@@ -36,7 +36,7 @@ func (r *ProductRepo) Save(ctx context.Context, p *model.Product) error {
 
 func (r *ProductRepo) FindByKeyword(ctx context.Context, keyword string) ([]*model.Product, error) {
     result := make([]*model.Product, 10)
-    if err := r.data.DB.Where("keyword LIKE ?", keyword).Find(&result).Error; err != nil {
+    if err := r.data.DB.Where("title LIKE ?", "%"+keyword+"%").Find(&result).Error; err != nil {
         if err != gorm.ErrRecordNotFound {
             r.log.WithContext(ctx).Errorf("query product by keyword[%s] error: %s", keyword, err.Error())
             return nil, err

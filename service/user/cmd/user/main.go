@@ -3,7 +3,9 @@ package main
 import (
     "awsomestore/common/logx"
     "flag"
+    "github.com/go-kratos/kratos/contrib/registry/etcd/v2"
     "github.com/go-kratos/kratos/v2"
+    clientv3 "go.etcd.io/etcd/client/v3"
     "os"
 
     "awsomestore/service/user/internal/conf"
@@ -30,6 +32,15 @@ func init() {
 }
 
 func newApp(logger log.Logger, gs *grpc.Server) *kratos.App {
+    // new etcd client
+    client, err := clientv3.New(clientv3.Config{
+        Endpoints: []string{"127.0.0.1:2379"},
+    })
+    if err != nil {
+        panic(err)
+    }
+    // new reg with etcd client
+    reg := etcd.New(client, etcd.Namespace("store-server"))
     return kratos.New(
         kratos.ID(id),
         kratos.Name(Name),
@@ -39,6 +50,7 @@ func newApp(logger log.Logger, gs *grpc.Server) *kratos.App {
         kratos.Server(
             gs,
         ),
+        kratos.Registrar(reg),
     )
 }
 
@@ -68,7 +80,7 @@ func main() {
     defer cleanup()
 
     // start and wait for stop signal
-    if err := app.Run(); err != nil {
+    if err = app.Run(); err != nil {
         panic(err)
     }
 }

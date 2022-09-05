@@ -6,6 +6,7 @@ import (
     "awsomestore/service/user/internal/biz"
     "awsomestore/service/user/internal/model"
     "context"
+    "fmt"
     "strconv"
 )
 
@@ -16,6 +17,7 @@ type AccountService struct {
 }
 
 func NewAccountService(uc *biz.AccountUsecase) *AccountService {
+    fmt.Println("init")
     return &AccountService{
         uc: uc,
     }

@@ -11,10 +11,6 @@ import (
 type ProductRepo interface {
     Save(context.Context, *model.Product) error
     FindByKeyword(context.Context, string) ([]*model.Product, error)
-    //FindByPID(context.Context, int64) (*model.Product, error)
-    //Update(context.Context, *model.Product) (*model.Product, error)
-    //ListByHello(context.Context, string) ([]*model.Product, error)
-    //ListAll(context.Context) ([]*model.Product, error)
 }
 
 type ProductUsecase struct {

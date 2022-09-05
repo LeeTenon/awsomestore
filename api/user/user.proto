@@ -56,6 +56,7 @@ message cartItem {
   string pid = 1;
   int32 count = 2;
   string title = 3;
-  double Price = 4;
-  string coverUrl = 5;
+  string type = 4;
+  double price = 5;
+  string coverUrl = 6;
 }

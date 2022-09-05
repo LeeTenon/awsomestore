@@ -2,6 +2,7 @@ package server
 
 import (
     "awsomestore/api/product"
+    "awsomestore/middleware/logx"
     "awsomestore/service/product/internal/conf"
     "awsomestore/service/product/internal/service"
     "github.com/go-kratos/kratos/v2/log"
@@ -13,6 +14,7 @@ import (
 func NewGRPCServer(c *conf.Server, greeter *service.ProductService, logger log.Logger) *grpc.Server {
     var opts = []grpc.ServerOption{
         grpc.Middleware(
+            logx.Server(logger),
             recovery.Recovery(),
         ),
     }
