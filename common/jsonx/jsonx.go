@@ -9,9 +9,14 @@ import (
 	"strconv"
 )
 
-func Unmarshal(i interface{}) ([]byte, error) {
-	typeof := reflect.TypeOf(i)
-	valueof := reflect.ValueOf(i)
+func Unmarshal(src []byte, dst interface{}) error {
+	err := json.Unmarshal(src, dst)
+	if err != nil {
+		return err
+	}
+
+	typeof := reflect.TypeOf(dst)
+	valueof := reflect.ValueOf(dst)
 	for i := 0; i < typeof.Elem().NumField(); i++ {
 		if valueof.Elem().Field(i).IsZero() {
 			def := typeof.Elem().Field(i).Tag.Get("default")
@@ -29,5 +34,6 @@ func Unmarshal(i interface{}) ([]byte, error) {
 			}
 		}
 	}
-	return json.Marshal(i)
+
+	return nil
 }

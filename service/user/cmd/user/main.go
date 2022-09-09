@@ -1,16 +1,18 @@
 package main
 
 import (
-    "awsomestore/common/logx"
-    "awsomestore/service/user/internal/conf"
-    "flag"
-    "github.com/go-kratos/kratos/v2"
-    "github.com/go-kratos/kratos/v2/config"
-    "github.com/go-kratos/kratos/v2/config/file"
-    "github.com/go-kratos/kratos/v2/log"
-    "github.com/go-kratos/kratos/v2/transport/grpc"
-    clientv3 "go.etcd.io/etcd/client/v3"
-    "os"
+	"awsomestore/common/logx"
+	"awsomestore/service/user/internal/conf"
+	"flag"
+	"os"
+
+	"github.com/go-kratos/kratos/contrib/registry/etcd/v2"
+	"github.com/go-kratos/kratos/v2"
+	"github.com/go-kratos/kratos/v2/config"
+	"github.com/go-kratos/kratos/v2/config/file"
+	"github.com/go-kratos/kratos/v2/log"
+	"github.com/go-kratos/kratos/v2/transport/grpc"
+	clientv3 "go.etcd.io/etcd/client/v3"
 )
 
 // go build -ldflags "-X main.Version=x.y.z"
