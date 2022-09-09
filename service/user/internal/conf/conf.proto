@@ -26,9 +26,12 @@ message Server {
 }
 
 message Data {
-  message Database {
-    string driver = 1;
-    string source = 2;
+  message Mysql {
+    string host = 1;
+  }
+  message Mongo {
+    string host = 1;
+    string connectTimeout = 2;
   }
   message Redis {
     string network = 1;
@@ -36,6 +39,7 @@ message Data {
     google.protobuf.Duration read_timeout = 3;
     google.protobuf.Duration write_timeout = 4;
   }
-  Database database = 1;
-  Redis redis = 2;
+  Mysql mysql = 1;
+  Mongo mongo = 2;
+  Redis redis = 3;
 }

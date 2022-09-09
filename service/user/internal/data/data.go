@@ -2,17 +2,22 @@ package data
 
 import (
     "awsomestore/service/user/internal/conf"
+    "context"
     "github.com/go-kratos/kratos/v2/log"
     "github.com/google/wire"
+    "go.mongodb.org/mongo-driver/mongo"
+    "go.mongodb.org/mongo-driver/mongo/options"
     "gorm.io/driver/mysql"
     "gorm.io/gorm"
+    "time"
 )
 
 var ProviderSet = wire.NewSet(NewData, NewAccountRepo, NewCartRepo)
 
 type Data struct {
-    DB    *gorm.DB
-    Redis string
+    DB      *gorm.DB
+    MongoDB mongo.Database
+    Redis   string
 }
 
 func NewData(c *conf.Data, logger log.Logger) (*Data, func(), error) {
@@ -28,6 +33,9 @@ func NewData(c *conf.Data, logger log.Logger) (*Data, func(), error) {
     if err != nil {
         log.Fatalf("init db error: %s", err.Error())
     }
+
+    client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(c.Database.Source).SetConnectTimeout(5*time.Second))
+    mongoDB = client.Database("")
 
     return &Data{
         DB: db,
